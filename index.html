@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Grafico Dolar mensual 2021-2024</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      html,
+      body {
+        font-size: 24px;
+        font-family: sans-serif;
+        text-align: center;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="myChart"></canvas>
+
+    <script>
+      const ctx = document.getElementById("myChart").getContext("2d");
+      Chart.defaults.font.size = 20;
+
+      let datosDolarMEP = [
+        169.87, 172, 178.34, 204.59, 201.92, 197.19, 213.48, 195.31, 190.56,
+        205.99, 207.35, 249.59, 276.71, 283.08, 302.48, 293.56, 312.51, 327.94,
+        354.81, 357.47, 397.37, 436.05, 466.98, 482.52, 509.99, 670.83, 701.01,
+        852.85, 858.82, 995, 1175.67, 1032.24, 1016.09, 1060.81, 1215.93,
+        1347.96, 1293.33,
+      ];
+      let datosInflacion = [
+        2.5, 3.5, 3.5, 2.5, 3.8, 3.9, 4.7, 6.7, 6.0, 5.1, 5.3, 7.4, 7.0, 6.2,
+        6.3, 4.9, 5.1, 6.0, 6.6, 7.7, 8.4, 7.8, 6.0, 6.3, 12.4, 12.7, 8.3, 12.8,
+        25.5, 20.6, 13.2, 11.0, 8.8, 4.2, 4.6, 4.0, 4.2,
+      ];
+
+      let datosDolarPorInflacion = [];
+
+      function calcularDolarPorInflacion() {
+        datosDolarPorInflacion[0] = 169.87;
+        for (let i = 1; i < datosInflacion.length; i++) {
+          datosDolarPorInflacion.push(
+            Number(
+              (
+                datosDolarPorInflacion[i - 1] *
+                (1 + datosInflacion[i] / 100)
+              ).toFixed(2)
+            )
+          );
+        }
+      }
+
+      calcularDolarPorInflacion();
+
+      let fechas = [
+        "08-2021",
+        "09-2021",
+        "10-2021",
+        "11-2021",
+        "12-2021",
+        "01-2022",
+        "02-2022",
+        "03-2022",
+        "04-2022",
+        "05-2022",
+        "06-2022",
+        "07-2022",
+        "08-2022",
+        "09-2022",
+        "10-2022",
+        "11-2022",
+        "12-2022",
+        "01-2023",
+        "02-2023",
+        "03-2023",
+        "04-2023",
+        "05-2023",
+        "06-2023",
+        "07-2023",
+        "08-2023",
+        "09-2023",
+        "10-2023",
+        "11-2023",
+        "12-2023",
+        "01-2024",
+        "02-2024",
+        "03-2024",
+        "04-2024",
+        "05-2024",
+        "06-2024",
+        "07-2024",
+        "08-2024",
+      ];
+
+      const myChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: fechas,
+          datasets: [
+            {
+              label: "Dolar MEP",
+              data: datosDolarMEP,
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+                "rgba(255, 206, 86, 0.2)",
+                "rgba(75, 192, 192, 0.2)",
+                "rgba(153, 102, 255, 0.2)",
+                "rgba(255, 159, 64, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+                "rgba(75, 192, 192, 1)",
+                "rgba(153, 102, 255, 1)",
+                "rgba(255, 159, 64, 1)",
+              ],
+            },
+            {
+              label: "Dolar por Inflacion",
+              data: datosDolarPorInflacion,
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+                "rgba(255, 206, 86, 0.2)",
+                "rgba(75, 192, 192, 0.2)",
+                "rgba(153, 102, 255, 0.2)",
+                "rgba(255, 159, 64, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+                "rgba(75, 192, 192, 1)",
+                "rgba(153, 102, 255, 1)",
+                "rgba(255, 159, 64, 1)",
+              ],
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
